@@ -20,6 +20,16 @@ namespace Chat
         return 1;
     }
 
+    int Connection::closeOnError(std::vector<SOCKET*> socks)
+    {
+        for (SOCKET* sock : socks)
+        {
+            closesocket(*sock);
+        }
+        WSACleanup();
+        return 1;
+    }
+
     int Connection::checkSocket()
     {
         // Check if we can use socket version
@@ -36,6 +46,18 @@ namespace Chat
             return 0;
     }
 
+    // Create a socket and put to Connection::Sock
+    // uses WSAGetLastError from Winsock2 (need to change)
+    int Connection::createSocket()
+    {
+        this->Sock = socket(AF_INET, SOCK_STREAM, 0);
+        if (Sock == INVALID_SOCKET)
+        {
+            std::cout << "Error initialization socket #" << WSAGetLastError() << std::endl;
+            return closeOnError(&Sock);
+        }
+        else return 0;
+    }
 
 #elif __linux__
 #include <sys/socket.h>
@@ -80,19 +102,6 @@ namespace Chat
             return 0;
     }
 
-    // Create a socket to Connection::Sock
-    // uses WSAGetLastError from Winsock2 (need to change)
-    int Connection::createSocket()
-    {
-        this->Sock = socket(AF_INET, SOCK_STREAM, 0);
-
-        if (Sock == INVALID_SOCKET)
-        {
-            std::cout << "Error initialization socket #" << WSAGetLastError() << std::endl;
-            return closeOnError(&Sock);
-        }
-        else return 0;
-    }
 
     // Return a pointer to socket
     SOCKET* Connection::getPSock()
@@ -110,4 +119,9 @@ namespace Chat
         return this->PORT;
     }
 
+    int Connection::closeSocket()
+    {
+        closesocket(this->Sock);
+        std::cout << "Socket closed" << std::endl;
+    }
 }

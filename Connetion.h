@@ -20,18 +20,24 @@ namespace Chat
 	protected:
 		short BUFF_SIZE;
 		unsigned short PORT;
-		bool IS_CLIENT = null;
+		bool IS_CLIENT;
 		SOCKET Sock;
 
 	public:
-		Connection(short buffer_size = 1024, unsigned short port = DEFAULT_PORT) {
+		Connection(short buffer_size = 1024, unsigned short port = DEFAULT_PORT) 
+		{
 			Connection::BUFF_SIZE = buffer_size;
 			Connection::PORT = port;
 		}
+		~Connection() {
+			this->closeSocket();
+		}
 #if _WIN32
 		virtual int closeOnError(SOCKET*);
+		virtual int closeOnError(std::vector<SOCKET*>);
 		virtual int checkSocket();
 #endif
+		virtual int closeSocket();
 		virtual int connectSocketToAdress(char* ip, int port);
 		virtual int createSocket();
 		virtual SOCKET* getPSock();
