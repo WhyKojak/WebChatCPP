@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{6dd34252-2e82-447b-bf6d-67652a767e46}</ProjectGuid>
-    <RootNamespace>WebChatCPP</RootNamespace>
+    <ProjectGuid>{b8cfbff3-28c8-4e15-8e5d-ac836c98df59}</ProjectGuid>
+    <RootNamespace>base</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,7 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="WebChatCPP.cpp" />
+    <ClCompile Include="..\..\ClientConnection.cpp" />
+    <ClCompile Include="..\..\Connection.cpp" />
+    <ClCompile Include="..\..\ServerConnection.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ClientConnection.h" />
+    <ClInclude Include="..\..\Connetion.h" />
+    <ClInclude Include="..\..\ServerConnection.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

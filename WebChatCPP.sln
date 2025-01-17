@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WebChatCPP", "WebChatCPP.vcxproj", "{6DD34252-2E82-447B-BF6D-67652A767E46}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebChat", "WebChat", "{A08923D3-B4AD-41A7-BAB5-3F9FEE378E46}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{EB6D2FDA-E5CF-45E1-BEF2-8F3E8F0352F7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "WebChatCPP\base\base.vcxproj", "{B8CFBFF3-28C8-4E15-8E5D-AC836C98DF59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +27,21 @@ Global
 		{6DD34252-2E82-447B-BF6D-67652A767E46}.Release|x64.Build.0 = Release|x64
 		{6DD34252-2E82-447B-BF6D-67652A767E46}.Release|x86.ActiveCfg = Release|Win32
 		{6DD34252-2E82-447B-BF6D-67652A767E46}.Release|x86.Build.0 = Release|Win32
+		{B8CFBFF3-28C8-4E15-8E5D-AC836C98DF59}.Debug|x64.ActiveCfg = Debug|x64
+		{B8CFBFF3-28C8-4E15-8E5D-AC836C98DF59}.Debug|x64.Build.0 = Debug|x64
+		{B8CFBFF3-28C8-4E15-8E5D-AC836C98DF59}.Debug|x86.ActiveCfg = Debug|Win32
+		{B8CFBFF3-28C8-4E15-8E5D-AC836C98DF59}.Debug|x86.Build.0 = Debug|Win32
+		{B8CFBFF3-28C8-4E15-8E5D-AC836C98DF59}.Release|x64.ActiveCfg = Release|x64
+		{B8CFBFF3-28C8-4E15-8E5D-AC836C98DF59}.Release|x64.Build.0 = Release|x64
+		{B8CFBFF3-28C8-4E15-8E5D-AC836C98DF59}.Release|x86.ActiveCfg = Release|Win32
+		{B8CFBFF3-28C8-4E15-8E5D-AC836C98DF59}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6DD34252-2E82-447B-BF6D-67652A767E46} = {A08923D3-B4AD-41A7-BAB5-3F9FEE378E46}
+		{EB6D2FDA-E5CF-45E1-BEF2-8F3E8F0352F7} = {A08923D3-B4AD-41A7-BAB5-3F9FEE378E46}
+		{B8CFBFF3-28C8-4E15-8E5D-AC836C98DF59} = {EB6D2FDA-E5CF-45E1-BEF2-8F3E8F0352F7}
 	EndGlobalSection
 EndGlobal
