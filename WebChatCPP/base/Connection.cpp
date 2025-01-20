@@ -1,13 +1,12 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
-#include "Connetion.h"
+#include "Connection.h"
 
 namespace Chat
 {
 
 #if _WIN32
-    // Only for Windows
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #pragma comment(lib ,"ws2_32.lib")
@@ -30,6 +29,7 @@ namespace Chat
         return 1;
     }
 
+    // possible usage of getaddrinfo
     int Connection::checkSocket()
     {
         // Check if we can use socket version
@@ -46,6 +46,25 @@ namespace Chat
             return 0;
     }
 
+#elif __linux__
+#include <sys/socket.h>
+    
+    int Connection::closeOnError(SOCKET* sock)
+    {
+        closesocket(*sock);
+        return 1;
+    }
+    int Connection::closeOnError(std::vector<SOCKET*> socks)
+    {
+        for (SOCKET* sock : socks)
+        {
+            closesocket(*sock);
+        }
+        return 1;
+    }
+
+#endif
+
     // Create a socket and put to Connection::Sock
     // uses WSAGetLastError from Winsock2 (need to change)
     int Connection::createSocket()
@@ -59,19 +78,8 @@ namespace Chat
         else return 0;
     }
 
-#elif __linux__
-#include <sys/socket.h>
-
-    int Connection::closeOnError(SOCKET* sock)
-    {
-        closesocket(*sock);
-        return 1;
-    }
-#endif
-
-
     // uses WSAGetLastError from Winsock2 (need to change)
-    int Connection::connectSocketToAdress(char* ip, int port)
+    int Connection::connectSocketToAdress(char* ip, PORT_TYPE port)
     {
         int errstate;
         // -- check if we can use IP adress
@@ -89,7 +97,7 @@ namespace Chat
         servInfo.sin_port = htons(port);
         servInfo.sin_addr = ipChars_to_ipNum;
 
-        if (!IS_CLIENT)
+        if (!this->IS_CLIENT)
             errstate = bind(this->Sock, (sockaddr*)&servInfo, sizeof(servInfo));
         else errstate = connect(this->Sock, (sockaddr*)&servInfo, sizeof(servInfo));
 
@@ -102,6 +110,12 @@ namespace Chat
             return 0;
     }
 
+    // two functions in one
+    int Connection::create_connectSocket(char* ip, PORT_TYPE port)
+    {
+        if (this->createSocket() && this->connectSocketToAdress(ip, port))
+            return 1;
+    }
 
     // Return a pointer to socket
     SOCKET* Connection::getPSock()
@@ -114,14 +128,10 @@ namespace Chat
         return this->Sock;
     }
 
-    unsigned short Connection::getPort()
-    {
-        return this->PORT;
-    }
-
     int Connection::closeSocket()
     {
         closesocket(this->Sock);
         std::cout << "Socket closed" << std::endl;
+        return 0;
     }
 }

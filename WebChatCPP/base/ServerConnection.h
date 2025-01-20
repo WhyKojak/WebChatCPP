@@ -1,16 +1,18 @@
 #pragma once
-#include "Connetion.h"
+#include "Connection.h"
 
 namespace Chat
 {
 	class ServerConnection : public Connection
 	{
-
+		std::vector<SOCKET> clientSockets;
 	public:
-		ServerConnection(short buff_size=1024, unsigned short port=7090) : 
-			Connection(buff_size, port) { }
+		ServerConnection(short buff_size=1024) : 
+			Connection(false, buff_size) { }
 
-		int acceptClient();
+		// loop listen function
+		int listenToConnections();
+		int acceptClient(bool* exitflag, bool* restartflag);
 	};
 
 }

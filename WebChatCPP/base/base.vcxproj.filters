@@ -18,7 +18,7 @@
     <ClInclude Include="ClientConnection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Connetion.h">
+    <ClInclude Include="Connection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ServerConnection.h">
