@@ -1,7 +1,11 @@
 #pragma once
 #include <stdio.h>
 #include <iostream>
+#include <string>
 #include <vector>
+#include <thread>
+#include <atomic>
+#include <mutex>
 
 namespace Chat
 {
@@ -13,12 +17,20 @@ namespace Chat
 
 #elif __linux__
 #include <sys/socket.h>
-	using SOCKET = int;
+using SOCKET = int;
 #endif
 
-#define DEFAULT_PORT 8160
-#define DEFAULT_IP "127.0.0.1"
-	using PORT_TYPE = unsigned short;
+using std::cout;
+using std::cerr;
+using std::endl;
+using std::string;
+
+const short DEFAULT_PORT = 8160;
+const char DEFAULT_IP[] = "127.0.0.1";
+const short DEFAULT_BUFLEN = 1024;
+const short TIMEOUT = 2;
+using PORT_TYPE = u_short;
+
 
 	class Connection
 	{
@@ -28,7 +40,7 @@ namespace Chat
 		SOCKET Sock;
 
 	public:
-		Connection(bool is_client, short buffer_size = 1024)
+		Connection(bool is_client, short buffer_size = DEFAULT_BUFLEN)
 		{
 			this->BUFF_SIZE = buffer_size;
 			this->IS_CLIENT = is_client;
@@ -42,8 +54,9 @@ namespace Chat
 		virtual int closeOnError(SOCKET*);
 		virtual int closeOnError(std::vector<SOCKET*>);
 		virtual int closeSocket();
-		virtual int connectSocketToAdress(char* ip, PORT_TYPE port);
 		virtual int createSocket();
+		virtual int connectSocketToAdress(char* ip, PORT_TYPE port);
+		// uses creteSocket and connectSocketToAdress
 		virtual int create_connectSocket(char* ip, PORT_TYPE port);
 		virtual SOCKET* getPSock();
 		virtual SOCKET getSock();
